@@ -1,13 +1,15 @@
-const { createFile } = require("./utils/multiply");
-const argv = require("yargs")
-                    .command('see', 'Show multiplication table in Console', {
-                      base: {
-                        demand: true,
-                        alias: 'b',
-                        default: 1
-                      }
-                    })
-                    .help()
-                    .argv;
+const { createFile, showTable } = require("./utils/multiply");
+const argv = require("./utils/yargs").argv;
 
-createFile(argv.base).then(r => console.log(r)).catch(err => console.log(err));
+let command = argv._[0];
+
+switch (command) {
+    case "create":
+            createFile(argv.base, argv.limit).then(r => console.log(r)).catch(err => console.log(err));
+        break;
+    case "show":
+            showTable(argv.base, argv.limit).then(r => console.log(r)).catch(err => console.log(err));
+        break;
+    default:
+        break;
+}

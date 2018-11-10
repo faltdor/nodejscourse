@@ -1,10 +1,10 @@
 const fileSystem = require('fs');
 
-let createFile = (base) => {
+let createFile = (base, limit = 10) => {
     return new Promise((resolve, reject) => {
         let data = "";
         if(!Number(base)){ reject(`Base ${base} is not a Number.`); return;}
-        for (let index = 0; index <= 10; index++) {
+        for (let index = 0; index <= limit; index++) {
             data += `${base} * ${index} = ${base * index}\n`;
         }
 
@@ -15,4 +15,15 @@ let createFile = (base) => {
     })
 }
 
-module.exports= { createFile }
+let showTable = (base, limit = 10) => {
+    return new Promise((resolve, reject) => {
+        let data = "";
+        if(!Number(base)){ reject(`Base ${base} is not a Number.`); return;}
+        for (let index = 0; index <= limit; index++) {
+            data += `${base} * ${index} = ${base * index}\n`;
+        }
+        resolve(data);
+    })
+}
+
+module.exports= { createFile , showTable}
