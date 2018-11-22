@@ -1,11 +1,16 @@
 const axios = require('axios');
+const API_KEY = require('./config').API_GOOCODE_KEY;
 
 const API_URL = 'https://maps.googleapis.com/maps/api/geocode/json?';
-const API_KEY = 'AIzaSyDyJPPlnIMOLp20Ef1LlTong8rYdTnaTXM';
+
 
 const getGeocodePlaceInfo = async (address) =>{
     let encodeURI = encodeURIComponent(address);
     let response =  await axios.get(`${API_URL}address=${encodeURI}&key=${API_KEY}`);
+
+    if(response.data.status === 'REQUEST_DENIED'){
+        throw new Error(`${response.data.status} : ${response.data.error_message}`);
+    }
 
     if(response.data.status === 'ZERO_RESULTS'){
         throw new Error(`Not data found for ${address}`);
